@@ -4,7 +4,7 @@
 
 Kotlin Multiplatform (KMP) + Compose Multiplatform app targeting Android and iOS.
 A "30 Seconds" board game themed around Bible and Jehovah's Witnesses topics.
-Package: `me.horaciocome.jw30s`
+Package: `me.horacioco.jw30s`
 
 ## Tech Stack
 
@@ -41,10 +41,10 @@ Package: `me.horaciocome.jw30s`
 ./gradlew :composeApp:testDebugUnitTest # Android unit tests
 
 # Run a SINGLE test class
-./gradlew :composeApp:testDebugUnitTest --tests "me.horaciocome.jw30s.ComposeAppCommonTest"
+./gradlew :composeApp:testDebugUnitTest --tests "me.horacioco.jw30s.ComposeAppCommonTest"
 
 # Run a SINGLE test method
-./gradlew :composeApp:testDebugUnitTest --tests "me.horaciocome.jw30s.ComposeAppCommonTest.example"
+./gradlew :composeApp:testDebugUnitTest --tests "me.horacioco.jw30s.ComposeAppCommonTest.example"
 
 # Run tests with verbose output
 ./gradlew :composeApp:allTests --info
@@ -70,7 +70,7 @@ JW30s/
     build.gradle.kts                            # Module build config (all KMP deps)
     src/
       commonMain/
-        kotlin/me/horaciocome/jw30s/
+        kotlin/me/horacioco/jw30s/
           App.kt                                # Root composable, NavHost, Koin DI
           Feedback.kt                           # GameFeedback interface
           Platform.kt                           # expect platform declarations
@@ -100,7 +100,7 @@ JW30s/
           values-pt/strings.xml                 # Portuguese strings
       commonTest/kotlin/                        # Shared tests (kotlin.test)
       androidMain/
-        kotlin/me/horaciocome/jw30s/
+        kotlin/me/horacioco/jw30s/
           MainActivity.kt                       # Activity with locale override
           JW30sApplication.kt                   # Application subclass (startKoin)
           Feedback.android.kt                   # AndroidGameFeedback (vibration + sound)
@@ -109,7 +109,7 @@ JW30s/
         AndroidManifest.xml                     # Manifest (JW30sApplication, VIBRATE permission)
         res/                                    # Android resources (icons, launcher)
       iosMain/
-        kotlin/me/horaciocome/jw30s/
+        kotlin/me/horacioco/jw30s/
           MainViewController.kt                 # iOS entry point (ComposeUIViewController + startKoin)
           Feedback.ios.kt                       # IOSGameFeedback (haptics + sound)
           Platform.ios.kt                       # actual platform impl
@@ -128,7 +128,7 @@ JW30s/
 | Regular functions        | camelCase     | `startRound()`, `shuffleNextCard()`   |
 | Variables / Properties   | camelCase     | `showContent`, `timerSeconds`         |
 | Constants                | SCREAMING_SNAKE | `DATABASE_NAME`, `DEFAULT_LANGUAGE`  |
-| Packages                 | lowercase     | `me.horaciocome.jw30s`               |
+| Packages                 | lowercase     | `me.horacioco.jw30s`               |
 | Acronyms in names        | ALL CAPS      | `IOSPlatform` (not `IosPlatform`)     |
 
 ### File Naming

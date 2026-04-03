@@ -60,11 +60,11 @@ kotlin {
 }
 
 android {
-    namespace = "me.horaciocome.jw30s"
+    namespace = "me.horacioco.jw30s"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "me.horaciocome.jw30s"
+        applicationId = "me.horacioco.jw30s"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

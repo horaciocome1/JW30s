@@ -51,7 +51,7 @@ JW30s/
   composeApp/
     src/
       commonMain/
-        kotlin/me/horaciocome/jw30s/
+        kotlin/me/horacioco/jw30s/
           App.kt                          # Root composable, NavHost
           Feedback.kt                     # GameFeedback interface
           Platform.kt                     # expect platform declarations
@@ -80,14 +80,14 @@ JW30s/
           values/strings.xml               # English strings
           values-pt/strings.xml            # Portuguese strings
       androidMain/
-        kotlin/me/horaciocome/jw30s/
+        kotlin/me/horacioco/jw30s/
           MainActivity.kt                 # Activity with locale override
           JW30sApplication.kt             # Application subclass (Koin init)
           Feedback.android.kt             # Android vibration + sound
           Platform.android.kt             # Android platform impl
           di/PlatformModule.android.kt    # Android Koin module
       iosMain/
-        kotlin/me/horaciocome/jw30s/
+        kotlin/me/horacioco/jw30s/
           MainViewController.kt           # iOS entry point (Koin init)
           Feedback.ios.kt                 # iOS haptics + sound
           Platform.ios.kt                 # iOS platform impl
@@ -139,7 +139,7 @@ Dependency injection uses Koin 4.0.4 with `koin-compose-viewmodel` for KMP ViewM
 ./gradlew :composeApp:testDebugUnitTest
 
 # Single test class
-./gradlew :composeApp:testDebugUnitTest --tests "me.horaciocome.jw30s.SomeTest"
+./gradlew :composeApp:testDebugUnitTest --tests "me.horacioco.jw30s.SomeTest"
 
 # Verbose output
 ./gradlew :composeApp:allTests --info
