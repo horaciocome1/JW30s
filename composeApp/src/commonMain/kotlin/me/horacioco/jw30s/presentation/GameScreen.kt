@@ -179,7 +179,6 @@ fun GameScreen(
         }
 
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
             containerColor = Color.Transparent,
             topBar = {
                 CenterAlignedTopAppBar(
@@ -306,9 +305,7 @@ fun GameScreen(
             },
         ) { innerPadding ->
             Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
+                modifier = Modifier.padding(innerPadding),
             ) {
                 // Card pager
                 if (uiState.shownCards.isNotEmpty()) {
@@ -318,6 +315,7 @@ fun GameScreen(
                             .fillMaxSize()
                             .padding(innerPadding),
                         userScrollEnabled = !uiState.isRoundActive && uiState.isRoundOver,
+
                         beyondViewportPageCount = 1,
                     ) { page ->
                         Box(
