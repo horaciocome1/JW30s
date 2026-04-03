@@ -1,48 +1,62 @@
 package me.horaciocome.jw30s
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
-
-import jw30s.composeapp.generated.resources.Res
-import jw30s.composeapp.generated.resources.compose_multiplatform
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import me.horaciocome.jw30s.data.SettingsRepository
+import me.horaciocome.jw30s.navigation.Game
+import me.horaciocome.jw30s.navigation.Home
+import me.horaciocome.jw30s.presentation.GameScreen
+import me.horaciocome.jw30s.presentation.GameViewModel
+import me.horaciocome.jw30s.presentation.HomeScreen
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
-@Preview
-fun App() {
+fun App(
+    onLanguageChanged: () -> Unit = {},
+) {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        val navController = rememberNavController()
+        val settingsRepository: SettingsRepository = koinInject()
+
+        NavHost(
+            navController = navController,
+            startDestination = Home,
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+            composable<Home> {
+                HomeScreen(
+                    settingsRepository = settingsRepository,
+                    onStartGame = { numberOfTeams, roundDurationSeconds ->
+                        navController.navigate(
+                            Game(
+                                numberOfTeams = numberOfTeams,
+                                roundDurationSeconds = roundDurationSeconds,
+                            ),
+                        ) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onLanguageChanged = onLanguageChanged,
+                )
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+            composable<Game> { backStackEntry ->
+                val route = backStackEntry.toRoute<Game>()
+                val viewModel: GameViewModel = koinViewModel {
+                    parametersOf(route.numberOfTeams, route.roundDurationSeconds)
                 }
+                val feedback: GameFeedback = koinInject()
+                GameScreen(
+                    viewModel = viewModel,
+                    feedback = feedback,
+                    onNavigateHome = {
+                        navController.popBackStack(Home, inclusive = false)
+                    },
+                )
             }
         }
     }

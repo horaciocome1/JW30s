@@ -1,0 +1,41 @@
+<resources>
+    <!-- Home Screen -->
+    <string name="app_title">JW 30s</string>
+    <string name="app_subtitle">Biblia &amp; Testemunhas de Jeova</string>
+    <string name="app_description">Descreva as palavras do cartao para a sua equipa dentro de 30 segundos sem dizer as palavras!</string>
+    <string name="start_game">Iniciar Jogo</string>
+
+    <!-- Game Setup -->
+    <string name="game_setup">Configurar Jogo</string>
+    <string name="number_of_teams">Numero de Equipas</string>
+    <string name="round_duration">Duracao da Ronda</string>
+    <string name="teams_format">%1$s equipas</string>
+    <string name="seconds_format">%1$ss</string>
+
+    <!-- Game Screen -->
+    <string name="team_get_ready">Equipa %1$s - Preparar!</string>
+    <string name="start_round">Iniciar Ronda</string>
+    <string name="team_playing">Equipa %1$s a jogar...</string>
+    <string name="times_up">Tempo Esgotado!</string>
+    <string name="swipe_to_review">Deslize para baixo para rever cartoes anteriores</string>
+    <string name="next_team">Proximo: Equipa %1$s</string>
+    <string name="leave_game">Sair do Jogo?</string>
+    <string name="leave_game_message">Tem a certeza que quer voltar ao ecra inicial? O progresso do jogo sera perdido.</string>
+    <string name="leave">Sair</string>
+    <string name="stay">Ficar</string>
+    <string name="leave_game_content_description">Sair do jogo</string>
+    <string name="card_content_description">Cartao %1$s</string>
+    <string name="end_round_early">Terminar ronda mais cedo?</string>
+    <string name="no">Nao</string>
+    <string name="skip">Saltar</string>
+    <string name="team_label">Equipa %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings">Definicoes</string>
+    <string name="language">Idioma</string>
+    <string name="portuguese">Portugues</string>
+    <string name="english">Ingles</string>
+    <string name="cards_in_portuguese">Os cartoes estao em Portugues</string>
+    <string name="default_teams">Numero de Equipas Padrao</string>
+    <string name="default_round_duration">Duracao da Ronda Padrao</string>
+</resources>

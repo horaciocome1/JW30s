@@ -1,71 +1,166 @@
-# This is a Kotlin Multiplatform project targeting Android, iOS.
+# JW 30s
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+A Kotlin Multiplatform (KMP) + Compose Multiplatform app for Android and iOS. It's a "30 Seconds" board game themed around Bible and Jehovah's Witnesses topics.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## About the Game
 
-### Build and Run Android Application
+**30 Seconds** is a fast-paced team party game. One player describes words on a card to their teammates within a time limit, without saying the actual words. Teams take turns, and the game rotates through all teams automatically.
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+This version focuses on Bible and Jehovah's Witnesses topics. Cards are organized into three categories:
+- **Generic** (59 cards) - General Bible and JW knowledge
+- **Miracles** (10 cards) - Biblical miracles
+- **Teachings** (10 cards) - Biblical teachings
 
-### Build and Run iOS Application
+All 79 playable cards are in Portuguese. The app UI supports both Portuguese and English.
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+## Features
 
----
+- **Team rotation** - Supports 2-8 teams with automatic turn rotation
+- **Configurable round timer** - 15 to 120 seconds in 15-second increments (default: 30s)
+- **Per-round timer** - Timer resets each round; not a session-wide countdown
+- **Card management** - Room database tracks shown cards so they don't repeat until all have been used
+- **Swipe to review** - After a round ends, swipe down through previously shown cards
+- **Shuffle to advance** - New cards are only shown via the shuffle button (no swiping forward)
+- **Round controls** - Timer must expire (or be skipped) before shuffling to the next card/team
+- **Skip round** - Tap the timer during an active round to end it early
+- **Haptic and audio feedback** - Device vibrates and plays a sound when time runs out
+- **Game setup** - Bottom sheet on home screen to configure teams and round duration
+- **Settings** - Persistent preferences for language, default teams, and default round duration
+- **i18n** - Full Portuguese and English UI localization via Compose Multiplatform resources
+- **Language switching** - Change language in settings; takes effect on Android via Activity recreation, on iOS via system locale
+- **Exit confirmation** - Back button disabled during game; exit requires confirmation dialog
+- **Blur background** - Instagram Stories-style blurred card background behind the active card
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## Tech Stack
 
-## About the project
+| Component | Technology | Version |
+|---|---|---|
+| Language | Kotlin / Swift (iOS entry) | 2.3.20 |
+| UI | Compose Multiplatform (Material 3) | 1.10.3 |
+| DI | Koin | 4.0.4 |
+| Database | Room KMP | 2.7.1 |
+| Persistence | DataStore Preferences | 1.1.7 |
+| Navigation | Compose Navigation (JetBrains KMP) | 2.9.2 |
+| Build | Gradle (Kotlin DSL) | 8.14.3 |
+| Android | compileSdk 36, minSdk 29, targetSdk 36 | - |
 
-This app emulates the 30 seconds board game.
+## Project Structure
 
-Here is a brief description of the game:
-
-**30 Seconds** is a fast-paced team party game where one player tries to get their teammates to guess as many words as possible from a card within 30 seconds by describing them without saying the actual word or obvious variations. Each card contains a mix of general knowledge topics like famous people, places, movies, and brands, and teams score points for every correct guess while racing along a board toward the finish. The game emphasizes quick thinking, clear communication, and energy, making it especially popular in group and social settings.
-
-What is different about this app is that it's focused on Bible and Jehovah's Witnesses related topics. The app is designed to be used in a group setting, where one person can act as the "describer" and the others can be the "guessers". The describer will have a card with a word or phrase related to the Bible or Jehovah's Witnesses, and they will have 30 seconds to describe it to the guessers without using the word itself or any obvious variations. The guessers will try to guess the word based on the describer's clues, and points will be awarded for each correct guess. The game can be played in teams or individually, and it's a fun way to test knowledge of Bible-related topics while also encouraging quick thinking and communication skills.
-
-The cards are images that are stored in cards folder. The app uses a simple algorithm to randomly select a card for the describer to use during their turn. In this current version the app doesn't care about which team is playing, it just randomly selects a card for the describer. The app also includes a timer that counts down from 30 seconds, and it will automatically end the turn when the time runs out. The guessers can keep track of their points, and the app can be used to play multiple rounds of the game. The app is designed to be simple and easy to use, making it a great option for group gatherings.
-
-Since the images can be of hi resolution, the app uses kotlin multiplatform's image loader library called "Kamel" to load the images efficiently and avoid memory issues. Kamel is a powerful image loading library that supports multiple platforms, including Android and iOS, and it provides features like caching and efficient memory management to ensure smooth performance when loading images in the app. By using Kamel, the app can handle high-resolution images without causing crashes or slowdowns, providing a better user experience for players.
-
-The app also uses Jetpack Compose for the UI, which allows for a modern and responsive design. The UI is designed to be simple and intuitive, with clear buttons and a timer display. The app also includes a score tracker, so players can keep track of their points throughout the game. Overall, this app provides a fun and engaging way to play the 30 Seconds game with a Bible-related twist, while also utilizing modern technologies like Kotlin Multiplatform and Jetpack Compose for an optimal user experience.
-
-The app uses room database to enhance the random card selection algorithm. The app stores the cards in a local database, and it keeps track of which cards have been used in previous rounds. This allows the app to avoid repeating cards until all cards have been used, providing a more varied and engaging gameplay experience. By using a database to manage the cards, the app can ensure that players are always presented with new and interesting challenges during their turns as describers.
-
-The app has a home screen where player can start a new game. When they start a new game, they are taken to the game screen where the first card is displayed for the describer and there is a timer counting down from 30 seconds. There is also a shuffle button to show the next card.
-
-The game screen uses a vertical pager to display the cards. Users can swipe down to see the previous card and swipe back up to see the cards that have been shown. But he cannot swipe up to see the next card, they have to click the shuffle button to see the next card. This is to prevent users from skipping cards without playing them.
-
-When the timer runs out, the device vibrates to indicate that the turn is over. And also play the notification sound to indicate that the turn is over. The app uses the device's vibration and notification system to provide feedback to the players, enhancing the overall gaming experience.
-
-There is also a button to go back to the home screen, allowing players to start a new game or exit the app. The home screen provides a simple and welcoming interface for players to begin their gaming session, while the game screen offers an engaging and interactive environment for playing the 30 Seconds game with Bible-related topics. Overall, the app is designed to be user-friendly and enjoyable for players of all ages, making it a great choice for group gatherings and family game nights.
-When users click on this button, they are asked to confirm if they want to go back to the home screen. This is to prevent users from accidentally leaving the game screen and losing their progress. If they confirm, they are taken back to the home screen where they can start a new game or exit the app. This confirmation step adds an extra layer of user experience, ensuring that players don't unintentionally disrupt their gaming session while navigating through the app.
-
-On game screen the device's back button is disabled to prevent users from accidentally leaving the game screen and losing their progress. This design choice ensures that players can focus on the game without worrying about unintentionally exiting the app. Instead of using the back button, players can use the provided navigation options within the app, such as the button to go back to the home screen, which includes a confirmation step to prevent accidental exits. This approach enhances the overall user experience by providing a more controlled and intentional navigation flow within the app.
+```
+JW30s/
+  composeApp/
+    src/
+      commonMain/
+        kotlin/me/horaciocome/jw30s/
+          App.kt                          # Root composable, NavHost
+          Feedback.kt                     # GameFeedback interface
+          Platform.kt                     # expect platform declarations
+          data/
+            AppDatabase.kt                # Room database
+            Card.kt                       # Room entity
+            CardDao.kt                    # Room DAO
+            CardRepository.kt             # Card business logic
+            LanguagePersistence.kt        # Platform language save interface
+            SettingsRepository.kt         # DataStore-backed settings
+          di/
+            AppModule.kt                  # Koin shared module
+            PlatformModule.kt             # expect platform DI module
+          domain/
+            CardResourceMapper.kt         # Card ID -> DrawableResource mapping
+          navigation/
+            Routes.kt                     # Type-safe navigation routes
+          presentation/
+            GameScreen.kt                 # Game screen (pager, timer, teams)
+            GameSetupBottomSheet.kt       # Pre-game setup (teams, duration)
+            GameViewModel.kt              # Game state management
+            HomeScreen.kt                 # Home screen
+            SettingsBottomSheet.kt        # App settings
+        composeResources/
+          drawable/                        # 82 card PNGs (79 + 3 backs)
+          values/strings.xml               # English strings
+          values-pt/strings.xml            # Portuguese strings
+      androidMain/
+        kotlin/me/horaciocome/jw30s/
+          MainActivity.kt                 # Activity with locale override
+          JW30sApplication.kt             # Application subclass (Koin init)
+          Feedback.android.kt             # Android vibration + sound
+          Platform.android.kt             # Android platform impl
+          di/PlatformModule.android.kt    # Android Koin module
+      iosMain/
+        kotlin/me/horaciocome/jw30s/
+          MainViewController.kt           # iOS entry point (Koin init)
+          Feedback.ios.kt                 # iOS haptics + sound
+          Platform.ios.kt                 # iOS platform impl
+          di/PlatformModule.ios.kt        # iOS Koin module
+  iosApp/                                  # Xcode project shell
+  gradle/libs.versions.toml               # Version catalog
+```
 
 ## Architecture
 
-This app follows a clean architecture approach, with a clear separation of concerns between the different layers of the app. The app is structured into three main layers: the presentation layer, the domain layer, and the data layer.
-- The presentation layer is responsible for the UI and user interactions. It includes the composables that make up the game screen and home screen, as well as the view models that manage the state of the UI.
-- The domain layer is responsible for the business logic of the app. It includes the use cases that define the operations that can be performed in the app, such as shuffling the cards
-- The data layer is responsible for managing the data of the app. It includes the repositories that provide access to the data, as well as the database that stores the cards and their usage history.
+Clean architecture with three layers, all in the shared `commonMain` source set:
+
+- **Presentation** - Compose screens, bottom sheets, and `GameViewModel` with `StateFlow`-based state management
+- **Domain** - `CardResourceMapper` mapping card IDs to drawable resources
+- **Data** - `CardRepository` (Room database), `SettingsRepository` (DataStore), `LanguagePersistence` (platform interface)
+
+Platform-specific code is minimal:
+- **Android** (`androidMain`) - `MainActivity` (locale override), `JW30sApplication` (Koin bootstrap), `AndroidGameFeedback`, Koin platform module (Room, DataStore, SharedPreferences)
+- **iOS** (`iosMain`) - `MainViewController` (Koin bootstrap), `IOSGameFeedback`, Koin platform module (Room, DataStore)
+
+Dependency injection uses Koin 4.0.4 with `koin-compose-viewmodel` for KMP ViewModel injection. The `GameViewModel` receives `numberOfTeams` and `roundDurationSeconds` as constructor parameters via Koin's `parametersOf`.
+
+## Build
+
+```shell
+# Android debug APK
+./gradlew :composeApp:assembleDebug
+
+# Android release APK
+./gradlew :composeApp:assembleRelease
+
+# iOS framework (simulator)
+./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
+
+# Full build (all targets)
+./gradlew build
+
+# Clean
+./gradlew clean
+```
+
+## Tests
+
+```shell
+# All tests (all platforms)
+./gradlew :composeApp:allTests
+
+# Android unit tests
+./gradlew :composeApp:testDebugUnitTest
+
+# Single test class
+./gradlew :composeApp:testDebugUnitTest --tests "me.horaciocome.jw30s.SomeTest"
+
+# Verbose output
+./gradlew :composeApp:allTests --info
+```
+
+Tests use `kotlin.test` (`@Test`, `assertEquals`, etc.) and live in `composeApp/src/commonTest/kotlin/`.
+
+## Game Flow
+
+1. **Home screen** - Tap "Start Game" to open the setup sheet, or the gear icon for settings
+2. **Game setup** - Choose number of teams (2-8) and round duration (15-120s), then start
+3. **Waiting state** - Shows "Team N - Get Ready!" with a "Start Round" button
+4. **Active round** - Timer counts down, card is displayed, swiping and shuffling are locked
+5. **Round over** - Timer hits 0 (or player skips), device vibrates and plays sound. Player can now swipe down to review previous cards
+6. **Shuffle** - Tap the shuffle button to load the next card and rotate to the next team
+7. **Repeat** from step 3 for the next team
+
+## Known Build Warnings
+
+These warnings are expected and benign:
+- `expect/actual classes are in Beta` - Room's `AppDatabaseConstructor` uses expect/actual
+- `Locale(String) is deprecated` - Android locale constructor in `MainActivity.attachBaseContext`
+- Koin `SavedStateHandle` backing field warning on iOS native linking
+- `Cannot infer bundle ID` info message on iOS framework linking
